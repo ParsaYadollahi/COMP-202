@@ -1,4 +1,3 @@
-package warmup.a4;
 import java.util.Arrays;
 
 public class WarmUpA4 {
