@@ -10,6 +10,8 @@ public class ExamGrading {
         System.out.println(numMatches(responses, solutions, 1, 2));
     }
 
+    //A method that returns an array of doubles calculating the grade of
+    // a student at index depending on their answer
     public static double[] gradeAllStudents(char[][] responses, char[] solutions) {
         double[] gradeAllStudents = new double[responses.length];
         //Iterate through all subArrays
@@ -38,7 +40,8 @@ public class ExamGrading {
         return gradeAllStudents;
     }
 
-    //A method that calculate the number of wrong answers that are similar to another student
+    //A method that returns an integer calculating the number of
+    // wrong answers that are similar to another student
     public static int numWrongSimilar(char[] responseOne, char[] responseTwo, char[] solutions) {
         //Initialize variable
         int cheatedNumbers = 0;
@@ -55,24 +58,28 @@ public class ExamGrading {
         return cheatedNumbers;
     }
 
+    //A method that returns an integer and compares a student at index with the others and
+    //determines the likelihood of cheating (compares the two answers and determines how
+    //many characters are the same and are wrong
     public static int numMatches(char[][] responses, char[] solutions, int index, int threshold) {
+        //Initialize variable
         int numberOfStudents = 0;
+        //for loop iterating through every subArray
         for (int i = 0; i < responses.length; i++) {
+            //Conditional statement if the response are not the same
             if (responses[index] != responses[i]) {
+                //"Refresh" variable to 0 so the answers don't add up
                 int similarAnswers = 0;
+                //Initialize variable calculating threshold
                 similarAnswers = numWrongSimilar(responses[index], responses[i], solutions);
+                //Conditional statement if the threshold is passed
                 if (similarAnswers >= threshold) {
+                    //increment variable
                     numberOfStudents += 1;
                 }
             }
         }
+        //return variable
         return numberOfStudents;
-    }
-
-    public static int[][] findSimilarAnswers(char[][] responses, char[] solutions, int threshold) {
-        int[][] similarAnswers = new int[responses.length][];
-        for(int i = 0; i < responses.length; i++){
-            similarAnswers[i] = new int[numMatches(responses, solutions, i, threshold)];
-        }
     }
 }
