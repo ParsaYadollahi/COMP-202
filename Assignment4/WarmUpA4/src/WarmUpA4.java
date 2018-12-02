@@ -1,3 +1,5 @@
+package WarmUpA4.src;
+
 import java.util.Arrays;
 
 public class WarmUpA4 {

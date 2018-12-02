@@ -5,9 +5,12 @@ import java.util.Arrays;
 public class ExamGrading {
 
     public static void main(String[] args) {
-        char[][] responses = {{'A', 'B', 'C', 'D', 'B', 'A'}, {'C', 'B', 'D', 'D', 'B', 'B'}, {'C', 'B', 'D', 'D', 'C', 'C'}};
-        char[] solutions = {'C', 'B', 'C', 'D', 'A', 'A'};
-        System.out.println(numMatches(responses, solutions, 1, 2));
+        char[][] responses = {{'C', 'A', 'B', 'B', 'C', 'A'}, {'A', 'A', 'B', 'B', 'B', 'B'},
+        {'C', 'B', 'A', 'B', 'C', 'A'}, {'A', 'B', 'A', 'B', 'B', 'B'}};
+        char[] solutions = {'C', 'A', 'B', 'B', 'C', 'C'};
+            System.out.println(Arrays.deepToString(findSimilarAnswers(responses,solutions,1)));
+
+
     }
 
     //A method that returns an array of doubles calculating the grade of
@@ -81,5 +84,35 @@ public class ExamGrading {
         }
         //return variable
         return numberOfStudents;
+    }
+
+    //A method that returns an int[][] where each index represents a student, and each sub-array lists
+    //the indices of all students who have similar wrong answers to the student at that index.
+    public static int[][] findSimilarAnswers(char[][] responses, char[] solutions, int threshold) {
+        //Create new array of length equal to the responses
+        int[][] similarAnswers = new int[responses.length][];
+        //populate the subArrays
+        //For loop itterating through subArrays
+        for (int i = 0; i < responses.length; i++) {
+            //Populate subArrays with integers
+            similarAnswers[i] = new int[numMatches(responses, solutions, i, threshold)];
+            //initialize variables
+            int l = 0;
+            //For loops for elements in subArray
+            for(int j = 0; j < responses.length; j++){
+                //Cant compare same students
+                if(i != j) {
+                    //Conditional Statement if the threshold is passed
+                    if (numWrongSimilar(responses[i], responses[j], solutions) >= threshold) {
+                        //input integer in subArray
+                        similarAnswers[i][l] = j;
+                        //Increment l
+                        l++;
+                    }
+                }
+            }
+        }
+        //Return value
+        return similarAnswers;
     }
 }
